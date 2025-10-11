@@ -2,7 +2,7 @@ This is a repo to train your hotkeys in games like StarCraft 2 and Dota 2.
 The plan is to have the program "read" the C:\Users\<user>\Documents\StarCraft\Accounts\<id>\Hotkeys file.
 (Not yet implemented) !!!
 
-To compile the program you will need g++ on Windows or g++ on Linux:
+To compile the program you will need gcc and g++ on Windows or gcc and g++ on Linux:
 
 ```
 cc -o nob nob.c
@@ -15,7 +15,7 @@ it compile on both OS's without any overhead. You just enter the above in the te
 the right OS.
 
 
-For now the version is extremely raw and my personal hotkeys (TheCoreRight6_qwerty) is literally hardcoded in the code, so you
+For now the version is extremely raw and my personal hotkeys (TheCoreRight6_qwerty) are literally hardcoded in the code, so you
 would have to change them yourself if you want to use this.
 
 TheCore as in the famous layout is itself the inspiration for the name of the project
