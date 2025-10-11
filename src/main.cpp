@@ -43,12 +43,11 @@ char generator(const char& mode) {
    static const std::array<char, 9> ctrlGroups = {'j', 'i', 'o', 'l', 'm', 'n', 'h', 'b', 'g'};
    static const std::array<char, 5> cameraLocations = {'0', '9', '8', 'u', 'b'};
 
-   srand(time(NULL));
    size_t i;
 
    if (mode == '1') {
       i = rand() % 9;
-      std::cout << "Select the " << i+1 << " control group" << std::endl;
+      std::cout << "Select the " << i+1 << "  control group" << std::endl;
       return ctrlGroups[i];
    }
    else if (mode == '2') {
@@ -69,7 +68,7 @@ char generator(const char& mode) {
          return cameraLocations[i];
       }
       else if (i+1 > 5) {
-         std::cout << "Select the " << i-4 << " control group" << std::endl;
+         std::cout << "Select the " << i-4 << "  control group" << std::endl;
          return ctrlGroups[i-5];
       }
       else if (i != 4 && i+1 < 5) {
@@ -98,6 +97,8 @@ bool checker(const char& answer, const char& userInput) {
 }
 
 int main() {
+   srand(time(NULL));
+
    char mode = instructions();
    while (1) {
       char answer = generator(mode);
