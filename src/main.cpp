@@ -7,7 +7,9 @@
 
 #ifdef _WIN32
 #include <conio.h>
+const char C = '\r';
 #else
+const char C = '\n';
 #include <termios.h>
 #include <unistd.h>
 
@@ -100,15 +102,13 @@ int main() {
    srand(time(NULL));
 
    char mode = instructions();
-   while (1) {
+   while (true) {
       char answer = generator(mode);
       char userInput = getch();
-
-      if (sizeof (userInput) == 1 && userInput != '\n'){
-         checker(answer, userInput);
-      }
+      if (userInput != C){
+            checker(answer, userInput);
+         }
       else return EXIT_FAILURE;
+      }
    }
-   return 0;
-}
 
