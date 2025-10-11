@@ -47,7 +47,7 @@ char generator(const char& mode) {
 
    if (mode == '1') {
       i = rand() % 9;
-      std::cout << "Select the " << i+1 << "  control group" << std::endl;
+      std::cout << "Select the  " << i+1 << " control group" << std::endl;
       return ctrlGroups[i];
    }
    else if (mode == '2') {
@@ -68,7 +68,7 @@ char generator(const char& mode) {
          return cameraLocations[i];
       }
       else if (i+1 > 5) {
-         std::cout << "Select the " << i-4 << "  control group" << std::endl;
+         std::cout << "Select the  " << i-4 << " control group" << std::endl;
          return ctrlGroups[i-5];
       }
       else if (i != 4 && i+1 < 5) {
