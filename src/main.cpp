@@ -3,9 +3,7 @@
 #include<cmath>
 #include<time.h>
 
-#if 0
 #include"tokenizer.cpp"
-#endif
 
 #ifdef _WIN32
 #include <conio.h>
@@ -29,16 +27,16 @@ char _getch() {
 
 char instructions() {
    char mode;
-   std::cout << std::endl;
    std::cout << "Control groups trainer: 1\n";
    std::cout << "Camera location trainer: 2\n";
    std::cout << "Mix: 3\n";
 
    mode = getch();
    if (mode == '1' || mode == '2' || mode == '3') {
+      std::cout << mode << std::endl << std::endl;
       return mode;
    }
-   return EXIT_FAILURE;
+   exit(EXIT_FAILURE);
 }
 
 char generator(const char& mode) {
@@ -63,36 +61,40 @@ char generator(const char& mode) {
       }
       return cameraLocations[i];
    }
-   else {
+   else if (mode == '3') {
       i = rand() % 14;
-      if (i+1 > 5) {
+      if (i == 0) return generator(mode);
+      if (i == 4) {
+         std::cout << "Jump to the " << 8 << " location" << std::endl;
+         return cameraLocations[i];
+      }
+      else if (i+1 > 5) {
          std::cout << "Select the " << i-4 << " control group" << std::endl;
          return ctrlGroups[i-5];
       }
-      else {
+      else if (i != 4 && i+1 < 5) {
          std::cout << "Jump to the " << 5-i << " location" << std::endl;
          return cameraLocations[4-i];
       }
    }
-   return EXIT_FAILURE;
+   return generator(mode);
 }
 
 bool checker(const char& answer, const char& userInput) {
    if (userInput == answer) {
-      std::cout << "Correct\n";
+      std::cout << "Correct\n\n";
       return true; // For future stat tracking
    }
-   else if  (userInput == 'q') {
-      exit(EXIT_SUCCESS);
+   else if (userInput == ' ') {
+      return EXIT_FAILURE;
    }
    else {
-      std::cout << std::endl;
       std::cout << "Incorrect\n";
       std::cout << "User inputted - " << userInput << std::endl;
       std::cout << "The correct key was -- " << answer << std::endl;
       std::cout << std::endl;
    }
-   return EXIT_FAILURE;
+   return false;
 }
 
 int main() {
@@ -101,10 +103,18 @@ int main() {
       char answer = generator(mode);
       char userInput = getch();
 
-      if (sizeof (userInput) == 1/* && userInput != '\n'*/){
+      if (sizeof (userInput) == 1 && userInput != '\n'){
          checker(answer, userInput);
       }
       else return 1;
    }
    return 0;
 }
+
+//TODO: 
+// Parsing the SC2 config file to find custom user hotkeys.
+// Different interactions with Alt, Shift, Ctrl, Double tapping.
+//
+// Combine the arrays into one for ease of use, sacrificing readability.
+//    This is because i need to know which array i am working with after 
+//    receiving index in checker()
