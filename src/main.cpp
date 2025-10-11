@@ -6,10 +6,12 @@
 #include"tokenizer.cpp"
 
 #ifdef _WIN32
+
+const char RET = '\r';
 #include <conio.h>
-const char C = '\r';
+
 #else
-const char C = '\n';
+
 #include <termios.h>
 #include <unistd.h>
 
@@ -23,6 +25,7 @@ char _getch() {
    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
    return c;
 }
+const char RET = '\n';
 #endif
 
 #define getch() _getch()
@@ -105,7 +108,7 @@ int main() {
    while (true) {
       char answer = generator(mode);
       char userInput = getch();
-      if (userInput != C){
+      if (userInput != RET){
             checker(answer, userInput);
          }
       else return EXIT_FAILURE;
