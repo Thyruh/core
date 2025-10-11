@@ -107,7 +107,7 @@ int main() {
       if (sizeof (userInput) == 1 && userInput != '\n'){
          checker(answer, userInput);
       }
-      else return 1;
+      else return EXIT_FAILURE;
    }
    return 0;
 }
