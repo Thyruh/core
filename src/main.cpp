@@ -81,7 +81,7 @@ char generator(const char& mode) {
          return cameraLocations[4-i];
       }
    }
-   return generator(mode);
+   return EXIT_FAILURE;
 }
 
 bool checker(const char& answer, const char& userInput) {
@@ -109,9 +109,9 @@ int main() {
       char answer = generator(mode);
       char userInput = getch();
       if (userInput != RET){
-            checker(answer, userInput);
-         }
-      else return EXIT_FAILURE;
+         checker(answer, userInput);
       }
+      else return EXIT_FAILURE;
    }
+}
 
