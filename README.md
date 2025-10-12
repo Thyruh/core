@@ -35,5 +35,5 @@ https://drive.google.com/drive/folders/1ui2HNwaUa4FkHzRwATgXHNVEpolLNOzA   -- Th
 to get started.
 
 https://github.com/tsoding/nob.h     -- I had a lot of fun learning to work with this library by Alexei. As he says himself -
-it might not be the best tool for building projects - but there is something very inspirational about building your C/C++ project with C.
+it might not be the best tool for building projects - but there is something very inspirational about building your project with C.
 
