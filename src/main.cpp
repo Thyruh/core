@@ -84,6 +84,7 @@ char generator(const char& mode) {
    return EXIT_FAILURE;
 }
 
+
 bool checker(const char& answer, const char& userInput) {
    if (userInput == answer) {
       std::cout << "Correct\n\n";
