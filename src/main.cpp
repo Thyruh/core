@@ -36,7 +36,6 @@ char instructions() {
    std::cout << "Camera location trainer: 2\n";
    std::cout << "Mix: 3\n";
 
-
    while (true) {
       mode = getch();
       if (mode == '1' || mode == '2' || mode == '3') {
