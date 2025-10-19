@@ -4,26 +4,26 @@
 #include<time.h>
 
 #ifdef _WIN32
+   const char RET = '\r';
 
-const char RET = '\r';
-#include <conio.h>
+#  include <conio.h>
 
 #else
 
-#include <termios.h>
-#include <unistd.h>
+#  include <termios.h>
+#  include <unistd.h>
 
-char _getch() {
-   termios oldt{}, newt{};
-   tcgetattr(STDIN_FILENO, &oldt);
-   newt = oldt;
-   newt.c_lflag &= ~(ICANON | ECHO);
-   tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-   char c = getchar();
-   tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-   return c;
-}
-const char RET = '\n';
+   char _getch() {
+      termios oldt{}, newt{};
+      tcgetattr(STDIN_FILENO, &oldt);
+      newt = oldt;
+      newt.c_lflag &= ~(ICANON | ECHO);
+      tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+      char c = getchar();
+      tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+      return c;
+   }
+   const char RET = '\n';
 #endif
 
 #define ctrl_size 10 
@@ -47,40 +47,42 @@ char instructions() {
 
 
 char generator(const char& mode) {
-   static const std::array<char, ctrl_size> ctrlGroups = {'j', 'i', 'o', 'l', 'm', 'n', 'h', 'b', 'g'};
-   static const std::array<char, camera_size> cameraLocations = {'0', '9', '8', 'u', 'b'};
+   static const std::array<char, ctrl_size> ctrlGroups = {'j', 'i', 'o', 'l', 'm', 'n', 'h', 'b', 'g', ' '};
+   static const std::array<char, camera_size> cameraLocations = {'0', '9', '8', 'u', ' ', ' ', ' ', 'b'};
 
    size_t i;
 
    if (mode == '1') {
       i = rand() % ctrl_size;
-      std::cout << "Select the  " << i+1 << " control group" << std::endl;
-      return ctrlGroups[i];
+      if (ctrlGroups[i] != ' ') {
+         std::cout << "Select the  " << i+1 << " control group" << std::endl; // Add non_emlty check
+         return ctrlGroups[i];
+      }
+      else generator(mode);
    }
    else if (mode == '2') {
       i = rand() % camera_size;
-      if (i == 4) {
-         std::cout << "Jump to the " << i+4 << " location" << std::endl;
-      }
-      else {
+      if (ctrlGroups[i] != ' ') {
          std::cout << "Jump to the " << i+1 << " location" << std::endl;
+         return cameraLocations[i];
       }
-      return cameraLocations[i];
+      else generator(mode);
    }
    else if (mode == '3') {
       i = rand() % (camera_size + ctrl_size); // rand() % 14
-      if (i == 4) {
-         std::cout << "Jump to the " << 8 << " location" << std::endl;
-         return cameraLocations[i];
+      if (ctrlGroups[i-camera_size] != ' ') {
+         if (i+1 > camera_size) {
+            std::cout << "Select the  " << i+1 - camera_size << " control group" << std::endl;
+            return ctrlGroups[i-camera_size];
+         }
       }
-      else if (i+1 > camera_size) {
-         std::cout << "Select the  " << i+1 - camera_size << " control group" << std::endl;
-         return ctrlGroups[i-camera_size];
+      if (ctrlGroups[camera_size-1-i] != ' ') {
+         if (i < camera_size) {
+            std::cout << "Jump to the " << camera_size-i << " location" << std::endl;
+            return cameraLocations[camera_size-1-i];
+         }
       }
-      else if (i != 4 && i <= camera_size) {
-         std::cout << "Jump to the " << camera_size-i << " location" << std::endl;
-         return cameraLocations[camera_size-1-i];
-      }
+      else generator(mode);
    }
    return EXIT_FAILURE;
 }
@@ -115,4 +117,3 @@ int main() {
       else return EXIT_FAILURE;
    }
 }
-
