@@ -4,7 +4,7 @@ The plan is to have the program "read" the C:\Users\<user>\Documents\StarCraft\A
 
 To compile the program you will need gcc and g++ on Windows or gcc and g++ on Linux:
 
-```
+```console
 cc -o nob nob.c
 ./nob
 ./build/main
