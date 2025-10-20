@@ -55,28 +55,29 @@ char generator(const char& mode) {
    if (mode == '1') {
       i = rand() % ctrl_size;
       if (ctrlGroups[i] != ' ') {
-         std::cout << "Select the  " << i+1 << " control group" << std::endl; // Add non_emlty check
+         std::cout << "Select the  " << i+1 << " control group" << std::endl;
          return ctrlGroups[i];
       }
       else generator(mode);
    }
    else if (mode == '2') {
       i = rand() % camera_size;
-      if (ctrlGroups[i] != ' ') {
+      if (cameraLocations[i] != ' ') {
+         std::cout << i << " - ";
          std::cout << "Jump to the " << i+1 << " location" << std::endl;
          return cameraLocations[i];
       }
       else generator(mode);
    }
    else if (mode == '3') {
-      i = rand() % (camera_size + ctrl_size); // rand() % 14
+      i = rand() % (camera_size + ctrl_size); // Merging the two arrays but not actually.
       if (ctrlGroups[i-camera_size] != ' ') {
-         if (i+1 > camera_size) {
+         if (i > camera_size) {
             std::cout << "Select the  " << i+1 - camera_size << " control group" << std::endl;
             return ctrlGroups[i-camera_size];
          }
       }
-      if (ctrlGroups[camera_size-1-i] != ' ') {
+      if (cameraLocations[camera_size-1-i] != ' ') {
          if (i < camera_size) {
             std::cout << "Jump to the " << camera_size-i << " location" << std::endl;
             return cameraLocations[camera_size-1-i];
@@ -87,7 +88,7 @@ char generator(const char& mode) {
    return EXIT_FAILURE;
 }
 
-bool checker(const char& answer, const char& userInput) {
+bool checker(const char& answer, const char &userInput) {
    if (userInput == answer) {
       std::cout << "Correct\n\n";
       return true; // For future stat tracking
