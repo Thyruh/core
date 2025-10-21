@@ -71,19 +71,22 @@ char generator(const char& mode) {
    }
    else if (mode == '3') {
       i = rand() % (camera_size + ctrl_size); // Merging the two arrays but not actually.
-      if (ctrlGroups[i-camera_size] != ' ') {
-         if (i > camera_size) {
-            std::cout << "Select the  " << i+1 - camera_size << " control group" << std::endl;
-            return ctrlGroups[i-camera_size];
+      if (i >= camera_size) {
+         if (ctrlGroups[i-camera_size] != ' ') {
+            std::cout << i << " - ";
+            std::cout << "Select the  " << i+1 - camera_size << " control group\n";
+            return ctrlGroups[i-camera_size]; // UB sometimes. No idea why. Probably something in conditions...
          }
+         else generator(mode);
       }
-      if (cameraLocations[camera_size-1-i] != ' ') {
-         if (i < camera_size) {
-            std::cout << "Jump to the " << camera_size-i << " location" << std::endl;
-            return cameraLocations[camera_size-1-i];
+      else if (i < camera_size) {
+         if (cameraLocations[camera_size-1-i] != ' ') {
+            std::cout << i << " - ";
+            std::cout << "Jump to the " << camera_size-i << " location\n";
+            return cameraLocations[camera_size-1-i]; // UB sometimes. No idea why.
          }
+         else generator(mode);
       }
-      else generator(mode);
    }
    return EXIT_FAILURE;
 }
