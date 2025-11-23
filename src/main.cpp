@@ -82,7 +82,8 @@ char generator(const char& mode) {
                     std::cout << "Select the  " << idx + 1 << " control group\n";
                     return ctrlGroups[idx];
                 }
-            } else {
+            }
+            else {
                 size_t idx = camera_size - 1 - i;
                 if (cameraLocations[idx] != ' ') {
                     std::cout << "Jump to the " << idx + 1 << " location\n";
@@ -95,7 +96,7 @@ char generator(const char& mode) {
     return static_cast<char>(EXIT_FAILURE);
 }
 
-bool checker(const char& answer, const char& userInput) {
+auto checker(const char& answer, const char& userInput) -> bool {
     if (userInput == answer) {
         std::cout << "Correct\n\n";
         return true;
@@ -117,8 +118,7 @@ int main() {
     while (true) {
         char answer = generator(mode);
         char userInput = getch();
-        if (userInput != RET)
-            checker(answer, userInput);
+        if (userInput != RET) checker(answer, userInput);
         else return EXIT_FAILURE;
     }
 }
